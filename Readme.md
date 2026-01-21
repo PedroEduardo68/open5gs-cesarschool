@@ -249,7 +249,19 @@ Tudo funcionando.
   <img src="./img/runUser.png" width="500" title="UE">
 </p>
 
-runUser.png
+
+Teste funcionando normal. 
+
+```bash
+ping -I uesimtun0 -c 1 google.com
+PING google.com (142.251.134.174) from 10.45.0.3 uesimtun0: 56(84) bytes of data.
+64 bytes from pngrub-ck-in-f14.1e100.net (142.251.134.174): icmp_seq=1 ttl=254 time=22.6 ms
+
+--- google.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 22.644/22.644/22.644/0.000 ms
+```
+
 
 ## Referencia
 
