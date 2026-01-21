@@ -186,7 +186,7 @@ user defeault e senha default
 ## Erros 
 
 ### Erro noble_bartender
-
+```bash
 vagrant up
 Bringing machine 'core' up with 'virtualbox' provider...
 Bringing machine 'ran' up with 'virtualbox' provider...
@@ -202,7 +202,7 @@ message, if any, is reproduced below. Please fix this error and try
 again.
 
 Couldn't open file ##/noble_bartender
-
+```
 ### Alterar a linha dentro do vagrantfile "noble_bartender"
 ```bash
 config.vm.box = "ubuntu/jammy64"
