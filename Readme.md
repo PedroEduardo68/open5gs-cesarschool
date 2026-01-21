@@ -1,3 +1,8 @@
+# Instalação do OPEN5GS dentro do VirtualBox para simulação da RAM
+
+A seguir está uma explicação clara e passo a passo de como instalar o OPEN5GS dentro do VirtualBox, usando uma máquina virtual Linux, para simulação de uma rede 5G (RAN/Core). O OPEN5GS é usado para simular o núcleo da rede 5G (5GC), enquanto a RAN normalmente é simulada com ferramentas como UERANSIM.
+
+Ubuntu v 22.04.05
 
 ## Command
 
@@ -5,32 +10,36 @@
  vagrant up
  vagrant ssh core
  vagrant ssh ran
+ vagrant reload --provision
+ vagrant reload
  vagrant halt 
  vagrant reload
  vagrant destroy
 ```
 
-## Instalati
+## Instalação
 
-# Geral
+### Geral
 ```bash
 vagrant up
 ```
 
-# Core
+### Core
 
 ```bash
 cd /vagrant/script/
 ./ohmyzsh.sh
 sudo apt-get update && sudo apt-get upgrade -y
+./open5gs.sh
 ```
 
-# Ran
+### Ran
 
 ```bash
 cd /vagrant/script/
 ./ohmyzsh.sh
 sudo apt-get update && sudo apt-get upgrade -y
+
 ```
 
 

@@ -9,6 +9,11 @@ Vagrant.configure("2") do |config|
     config.vm.define "core" do |core|
         core.vm.hostname = "core"
         core.vm.network "private_network", ip: "192.168.56.10"
+        config.vm.network "forwarded_port",
+            guest: 9999,
+            host: 9999,
+            protocol: "tcp",
+            auto_correct: true
     end
 
     config.vm.define "ran" do |ran|
