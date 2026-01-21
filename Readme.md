@@ -43,6 +43,31 @@ sudo apt-get update && sudo apt-get upgrade -y
 ```
 
 
+
+## WEBUI
+
+Para acessar a webui, será necessario reconfigurar o arquivo index.js para aceitar qualquer ip de configuração. Nesse caso.
+
+```bash
+nano /usr/lib/node_modules/open5gs/server/index.js
+```
+
+Alterar a linha baixo para '0.0.0.0' conforme o exemplo.
+```bash
+server.listen(port,'0.0.0.0', err => {
+```
+
+E também deve possuir as linhas no vangrantfile, que já está pronto.
+
+```bash
+        config.vm.network "forwarded_port",
+            guest: 9999,
+            host: 9999,
+            protocol: "tcp",
+            auto_correct: true
+```
+
+
 ## Erros 
 
 ### Erro noble_bartender
