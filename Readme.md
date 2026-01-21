@@ -31,6 +31,64 @@ cd /vagrant/script/
 ./ohmyzsh.sh
 sudo apt-get update && sudo apt-get upgrade -y
 ./open5gs.sh
+sudo nano /etc/open5gs/amf.yaml
+```
+
+Dentro /etc/open5gs/amf.yaml deixar conforme abaixo: 
+```bash 
+  ngap:
+    server:
+      - address: 192.168.56.10 
+```
+
+
+```bash
+sudo nano /etc/open5gs/upf.yaml
+```
+
+
+Dentro  /etc/open5gs/upf.yaml deixar conforme abaixo: 
+```bash
+  gtpu:
+    server:
+      - address: 192.168.56.10
+```
+
+
+```bash
+sudo systemctl restart open5gs-nrfd
+sudo systemctl status open5gs-nrfd
+
+
+sudo systemctl restart open5gs-amfd
+sudo systemctl status open5gs-amfd
+
+sudo systemctl restart open5gs-upfd
+sudo systemctl status open5gs-upfd
+```
+
+
+```bash
+### Enable IPv4/IPv6 Forwarding
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+### Enable IPv4/IPv6 Forwarding
+$ sudo sysctl -w net.ipv4.ip_forward=1
+$ sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+### Add NAT Rule
+$ sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
+$ sudo ip6tables -t nat -A POSTROUTING -s 2001:db8:cafe::/48 ! -o ogstun -j MASQUERADE
+
+sudo iptables -I INPUT -i ogstun -j ACCEPT
+```
+
+
+Adicionar um usuarios:
+```bash
+sudo /vagrant/script/open5gs-dbctl.sh showall
+sudo /vagrant/script/open5gs-dbctl.sh add 999700000000001 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA
 ```
 
 ### Ran
@@ -39,10 +97,63 @@ sudo apt-get update && sudo apt-get upgrade -y
 cd /vagrant/script/
 ./ohmyzsh.sh
 sudo apt-get update && sudo apt-get upgrade -y
+./ran.sh
+```
 
+```bash
+cd /vagrant/script/
+./ohmyzsh.sh
+sudo apt-get update && sudo apt-get upgrade -y
+./ran.sh
 ```
 
 
+
+
+Alterar as linhas abaixo do arquivo config/open5gs-gnb.yaml colocando o ip 192.168.56.11 do RANIP e o 192.168.56.10 do COREIP.
+```bash
+linkIp: 192.168.56.11  #127.0.0.1  # gNB's local IP address for Radio Link Simulation (Usually same wi>
+ngapIp: 192.168.56.11 #127.0.0.1   # gNB's local IP address for N2 Interface (Usually same with local >
+gtpIp: 192.168.56.11 #127.0.0.1    # gNB's local IP address for N3 Interface (Usually same with local >
+
+# List of AMF address information
+amfConfigs:
+  - address: 192.168.56.10 #127.0.0.5
+    port: 38412
+```
+
+
+Alterar as linhas abaixo do arquivo config/open5gs-ue.yaml
+```bash
+# List of gNB IP addresses for Radio Link Simulation
+gnbSearchList:
+  - 192.168.56.11  #127.0.0.1
+```
+
+
+
+Subir GNB:
+```bash
+build/nr-gnb -c config/open5gs-gnb.yaml
+```
+
+Subir UE equipamento do usuario:
+```bash
+sudo build/nr-ue -c config/open5gs-ue.yaml
+
+
+
+
+```
+Copiar os dados abaixo e cadastrar no user:
+```bash
+# IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 digits)
+supi: 'imsi-999700000000001'
+# Permanent subscription key
+key: '465B5CE8B199B49FAA5F0A2EE238A6BC'
+# Operator code (OP or OPC) of the UE
+op: 'E8ED289DEBA952E4283B54E88E6183CA'
+```
 
 ## WEBUI
 
@@ -66,6 +177,10 @@ E também deve possuir as linhas no vangrantfile, que já está pronto.
             protocol: "tcp",
             auto_correct: true
 ```
+
+
+Acessa normal pelo navegardo do pc: http://localhost:9999/
+user defeault e senha default
 
 
 ## Erros 
@@ -123,4 +238,12 @@ Vagrant:
 vagrant plugin install vagrant-disksize
 ```
 
+<p align="center">
+  <img src="./img/usercadastradoweb.png" width="500" title="UE">
+</p>
 
+
+## Referencia
+
+Open5GS = https://open5gs.org/open5gs/docs/guide/01-quickstart/
+RAN = https://github.com/aligungr/UERANSIM 
