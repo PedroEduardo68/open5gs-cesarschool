@@ -238,10 +238,18 @@ Vagrant:
 vagrant plugin install vagrant-disksize
 ```
 
+Cadastro pela WEB também.
 <p align="center">
   <img src="./img/usercadastradoweb.png" width="500" title="UE">
 </p>
 
+
+Tudo funcionando.
+<p align="center">
+  <img src="./img/runUser.png" width="500" title="UE">
+</p>
+
+runUser.png
 
 ## Referencia
 
