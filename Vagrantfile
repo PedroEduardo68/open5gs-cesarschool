@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
 
     config.vm.box = "ubuntu/jammy64"
+    config.vm.boot_timeout = 600
     config.disksize.size = "100GB"
 
     config.vm.define "core" do |core|
