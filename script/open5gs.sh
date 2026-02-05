@@ -44,4 +44,3 @@ sudo apt install nodejs -y
 curl -fsSL https://open5gs.org/open5gs/assets/webui/install | sudo -E bash -
  # Run Update and Install
 
- #localhost:9999
